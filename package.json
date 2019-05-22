@@ -1,8 +1,8 @@
 {
-  "name": "common",
+  "name": "element-publish-component",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/epc.min.js",
   "scripts": {
     "dev": "webpack-dev-server --config build/webpack.dev.config.js",
     "build:prod": "node build/build.js prod",
