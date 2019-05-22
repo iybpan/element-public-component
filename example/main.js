@@ -9,6 +9,7 @@ import plugin from '../src/index'
 Vue.use(ElementUI);
 Vue.use(plugin);
 
+/* eslint-disable no-new*/
 new Vue({
     el: '#app',
     component: {

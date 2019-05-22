@@ -12,70 +12,71 @@ const HOST = process.env.HOST
 const PORT = 8080;
 
 module.exports = merge(webpackBaseConfig, {
-    mode: 'development',
-    devtool: 'eval-source-map',
+  mode: 'development',
+  devtool: 'eval-source-map',
 
-    entry: path.join(path.join(__dirname, '../'), 'example/main.js'),
-    // 输出
-    output: {
-        path: path.join(__dirname, '../examples/dist'),
-        publicPath: '',
-        filename: '[name].js',
-        chunkFilename: '[name].chunk.js'
+  entry: path.join(path.join(__dirname, '../'), 'example/main.js'),
+  // 输出
+  output: {
+    path: path.join(__dirname, '../examples/dist'),
+    publicPath: '',
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js'
+  },
+  devServer: {
+    historyApiFallback: true,
+    inline: true,
+    progress: true,
+    quiet: true,
+    overlay: {
+      errors: true,
     },
-    devServer: {
-        historyApiFallback: true,
-        inline: true,
-        progress: true,
-        quiet: true,
-        overlay: {
-            errors: true,
-        },
-        port: PORT
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(js|vue)$/,
-                loader: 'eslint-loader',
-                enforce: 'pre',
-                include: [path.resolve(__dirname, '../src')],
-                options: {
-                    formatter: require('eslint-friendly-formatter'),
-                    emitWarning: true
-                }
-            },
-            {
-                test: /\.(sa|sc|c)ss$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader',
-                ]
-            },
-            {
-                test: /\.less$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    'postcss-loader',
-                    'less-loader'
-                ]
-            }
+    port: PORT
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /node_modules/,
+        include: [path.resolve(__dirname, '../src')],
+        options: {
+          formatter: require('eslint-friendly-formatter'),
+          emitWarning: true
+        }
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
         ]
-    },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),// 热加载模块
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: path.join(__dirname, '../example/index.html'),
-            inject: true
-        }),
-        new FriendlyErrorsWebpackPlugin({
-            compilationSuccessInfo: {
-                messages: [`You application is running here http://localhost:${PORT}/`],
-            },
-        })
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'postcss-loader',
+          'less-loader'
+        ]
+      }
     ]
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),// 热加载模块
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: path.join(__dirname, '../example/index.html'),
+      inject: true
+    }),
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: [`You application is running here http://localhost:${PORT}/`],
+      },
+    })
+  ]
 })
