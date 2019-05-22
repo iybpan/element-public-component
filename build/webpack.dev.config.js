@@ -9,13 +9,13 @@ const webpackBaseConfig = require('./webpack.base.config');
 
 const HOST = process.env.HOST
 // const PORT = process.env.PORT && Number(process.env.PORT)
-const PORT= 8080;
+const PORT = 8080;
 
 module.exports = merge(webpackBaseConfig, {
     mode: 'development',
     devtool: 'eval-source-map',
 
-    entry:  path.join(path.join(__dirname, '../'), 'example/main.js'),
+    entry: path.join(path.join(__dirname, '../'), 'example/main.js'),
     // 输出
     output: {
         path: path.join(__dirname, '../examples/dist'),
@@ -35,6 +35,16 @@ module.exports = merge(webpackBaseConfig, {
     },
     module: {
         rules: [
+            {
+                test: /\.(js|vue)$/,
+                loader: 'eslint-loader',
+                enforce: 'pre',
+                include: [path.resolve(__dirname, '../src')],
+                options: {
+                    formatter: require('eslint-friendly-formatter'),
+                    emitWarning: true
+                }
+            },
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
