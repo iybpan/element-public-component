@@ -13,8 +13,9 @@
     margin-top: 10px;
 
     .label {
-      //min-width: 60px;
+      width: 100px;
       margin-right: 20px;
+      text-align: right;
     }
 
     .el-input,
@@ -24,6 +25,23 @@
   }
 
   .form-btn-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 50px;
+
+    .btn-box-fold {
+      cursor: pointer;
+      user-select: none;
+      color: #3ca2ff;
+      font-size: 14px;
+    }
+
+    .btn-box  .el-button{
+      width: 80px;
+
+    }
   }
 }
 

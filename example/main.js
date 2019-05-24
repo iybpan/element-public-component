@@ -4,7 +4,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
 import plugin from '../src/index'
-// import plugin from '../dist/epc'
+// import plugin from '../dist/epc.min'
 
 Vue.use(ElementUI);
 Vue.use(plugin);
