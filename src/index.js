@@ -1,9 +1,13 @@
 import SearchPanel from './components/search-panel/search-panel'
 import MyInputNumberRange from './components/search-panel/my-input-number-range'
+import TableComponent from './components/table/table-component'
+import TablePaginationComponent from './components/table/table-pagination-component'
 
 const components = {
   PublicSearchPanel: SearchPanel,
-  PublicInputNumberRange: MyInputNumberRange
+  PublicInputNumberRange: MyInputNumberRange,
+  PublicTable: TableComponent,
+  PublicTablePagination: TablePaginationComponent
 };
 
 const install = function (Vue, opts = {}) {
