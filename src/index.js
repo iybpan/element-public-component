@@ -2,12 +2,14 @@ import SearchPanel from './components/search-panel/search-panel'
 import MyInputNumberRange from './components/search-panel/my-input-number-range'
 import TableComponent from './components/table/table-component'
 import TablePaginationComponent from './components/table/table-pagination-component'
+import CommonPage from './business-module/common-page/common-page'
 
 const components = {
   PublicSearchPanel: SearchPanel,
   PublicInputNumberRange: MyInputNumberRange,
   PublicTable: TableComponent,
-  PublicTablePagination: TablePaginationComponent
+  PublicTablePagination: TablePaginationComponent,
+  PublicCommonPage: CommonPage
 };
 
 const install = function (Vue, opts = {}) {

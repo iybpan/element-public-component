@@ -1,0 +1,17 @@
+[
+  {
+    "label": "身份证",
+    "name": "cardNum",
+    "type": "input"
+  },
+  {
+    "label": "姓名",
+    "name": "name",
+    "type": "input"
+  },
+  {
+    "label": "性别",
+    "name": "sex",
+    "type": "input"
+  }
+]

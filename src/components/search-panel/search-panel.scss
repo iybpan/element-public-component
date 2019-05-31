@@ -26,21 +26,24 @@
 
   .form-btn-box {
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 50px;
+    margin: 20px 30px;
 
     .btn-box-fold {
+      display: inline-block;
       cursor: pointer;
       user-select: none;
       color: #3ca2ff;
       font-size: 14px;
+      text-align: center;
     }
 
-    .btn-box  .el-button{
-      width: 80px;
+    .btn-box {
+      user-select: none;
+      text-align: right;
 
+      .el-button {
+        width: 80px;
+      }
     }
   }
 }

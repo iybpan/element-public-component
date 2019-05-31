@@ -3,7 +3,7 @@
     <table-component ref="paginationTable"
                      :config="config"
                      :default-sort="defaultSort"
-                     :data="data"
+                     :data="dataList"
                      :span-method="spanMethod"
                      :selection="selection"
                      :scoped-slots-obj="$scopedSlots"
@@ -25,6 +25,17 @@
 <script>
   import TableComponent from './table-component'
 
+  /**
+   * 输出事件：
+   * 1. loadData(page,size,sort);
+   * 2. select(selection, row);
+   * 3. selectChange(selection)
+   *
+   * 组件引用可以调用方法getTableRef获取table引用
+   * config：配置项
+   * data:
+   *
+   */
   export default {
     name: 'TablePagination',
     components: {
@@ -55,66 +66,38 @@
         type: Array,
         default: () => [10, 20, 30, 50]
       },
-      // 请求路径
-      requestUrl: {
-        type: String,
-        default: 'static/data.json'
-      },
-      // 请求前需要处理参数对象
-      requestBeforeParamsHandle: {
-        type: Function,
-        default: params => params
-      },
-      requestAfterResultHandle: {
-        type: Function,
-        default: data => data
+      // 引入的数据对象
+      data: {
+        type: Object,
+        default: () => ({
+          list: [],
+          page: 0,
+          pageSize: 10,
+          total: 0
+        })
       }
     },
     data() {
       return {
-        data: [],
+        dataList: [],
         pagination: {
           page: 1,
-          pageSize: 20,
-          total: 48
-        },
+          pageSize: 10,
+          total: 0
+        }
       }
     },
-    mounted() {
-      this.loadData(1);
+    watch: {
+      data(val) {
+        this.dataList = val.list || [];
+        // 更新页码
+        this.paginationInit(val.page, val.pageSize, val.total);
+      }
     },
     methods: {
       // 获取数据
-      async loadData(page, pageSize = this.pagination.pageSize) {
-        try {
-          const params = await Promise.resolve(() => {
-            if (this.requestBeforeParamsHandle) {
-              return this.requestBeforeParamsHandle();
-            }
-            return {};
-          });
-          this.resultHandle(await this.requestData(page, pageSize, params), page, pageSize);
-        } catch (e) {
-        }
-      },
-      // 请求数据
-      async requestData(page, pageSize) {
-        return await (await fetch(this.requestUrl + `?page=${page}&pageSize=${pageSize}`)).json();
-      },
-      resultHandle(result, page, pageSize) {
-        /**
-         * 要求格式必须处理成为
-         * {
-         *     list: [...],
-         *     total: number
-         * }
-         */
-        let data = result;
-        if (this.requestAfterResultHandle) {
-          data = this.requestAfterResultHandle(result) || {list: [], total: 0};
-        }
-        this.data = data.list || [];
-        this.paginationInit(page, pageSize, data.total || 0)
+      loadData(page, pageSize, sort) {
+        this.$emit("loadData", page, pageSize, sort)
       },
       // 页面对象更新
       paginationInit(page, pageSize, total) {
@@ -125,16 +108,19 @@
       handleSizeChange(val) {
         this.loadData(this.pagination.page, val);
       },
+      // 页数变化事件
       handleCurrentChange(val) {
         this.loadData(val, this.pagination.pageSize);
       },
+      // 点击排序时触发重新加载数据
       onSortChange(args) {
-        // let {column, prop, order} = args;
-        this.$emit('sortChange', {
-          ...args
-        });
+        let {
+          column,
+          prop,
+          order
+        } = args;
         // 点击排序后，重新加载数据
-        this.loadData(1, this.pagination.pageSize);
+        this.loadData(1, this.pagination.pageSize, order);
       },
       // 用户手动点击时候触发，selection表示已选择的，row表示当前选中项
       onSelect(selection, row) {

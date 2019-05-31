@@ -1,6 +1,7 @@
 <template>
   <el-table ref="multipleTable"
             :data="data"
+            :row-key="rowKey"
             :span-method="spanMethod"
             :default-sort="defaultSort"
             :header-cell-style="myHeaderStyle"
@@ -27,6 +28,9 @@
       TableColumnRender
     },
     props: {
+      rowKey: {
+        type: String,
+      },
       defaultSort: {
         type: Object,
         default: () => {

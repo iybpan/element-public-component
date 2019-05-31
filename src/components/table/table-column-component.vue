@@ -10,7 +10,7 @@
     <slot :name="item.labelTemplateName"
           :row="scope.row"
           :column="scope.column"
-          :index="scope.$index">
+          :$index="scope.$index">
     {{ item.label }}
     </slot>
     </span>
@@ -20,7 +20,7 @@
       <slot :name="item.propTemplateName"
             :row="scope.row"
             :column="scope.column"
-            :index="scope.$index"
+            :$index="scope.$index"
             :store="scope.store">
         <template v-if="!item.column">{{resolveProp(scope.row,item.prop)}}</template>
       </slot>

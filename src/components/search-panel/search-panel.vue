@@ -227,25 +227,36 @@
       </div>
     </div>
     <div class="form-btn-box">
-      <div style="width: 175px;"/>
-      <div v-if="!hiddenAdvanceSearch"
-           class="btn-box-fold"
-           @click="isAdvancedSearch = !isAdvancedSearch">
-        <span> {{ isAdvancedSearch?'收起':'展开' }} </span>
-        <i :class="isAdvancedSearch?'el-icon-arrow-up':'el-icon-arrow-down'"/>
-      </div>
-      <div class="btn-box">
-        <el-button :loading="loading"
-                   type="primary"
-                   size="small"
-                   @click="queryPersonData">
-          查询
-        </el-button>
-        <el-button size="small"
-                   @click="resetQuery()">
-          重置
-        </el-button>
-      </div>
+      <el-row :gutter="20" type="flex" justify="space-between">
+        <el-col :span="10">
+          <slot name="left"/>
+        </el-col>
+        <el-col :span="4">
+          <div v-if="!hiddenAdvanceSearch">
+            <span class="btn-box-fold"
+                  @click="isAdvancedSearch = !isAdvancedSearch">
+            <span> {{ isAdvancedSearch?'收起':'展开' }} </span>
+            <i :class="isAdvancedSearch?'el-icon-arrow-up':'el-icon-arrow-down'"/>
+            </span>
+          </div>
+        </el-col>
+        <el-col :span="10">
+          <slot name="right">
+            <div class="btn-box">
+              <el-button :loading="loading"
+                         type="primary"
+                         size="small"
+                         @click="queryForm">
+                查询
+              </el-button>
+              <el-button size="small"
+                         @click="resetQuery()">
+                重置
+              </el-button>
+            </div>
+          </slot>
+        </el-col>
+      </el-row>
     </div>
   </el-form>
 </template>
@@ -374,7 +385,7 @@
         return !!item.isAdvancedSearch === this.isAdvancedSearch;
       },
       // 搜索按钮，根据当前所在的搜索类型，返回展示在页面的项的值
-      queryPersonData() {
+      queryForm() {
         const data = {};
         this.config.forEach((item) => {
           if (this.isShow(item)) {
